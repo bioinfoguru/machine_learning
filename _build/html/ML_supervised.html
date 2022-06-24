@@ -1,0 +1,1244 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supervised learning &#8212; Machine Learning</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Unsupervised learning" href="kmeans.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo_final_horizontal.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="kmeans.html">
+   Unsupervised learning
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Supervised learning
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+   <style> .text1{font-size=18pt;} .footer1{ margin: 2em; text-align: center; } .social_media{ color: #9c51e0; font-size: 1.5em; word-spacing: 0.5em; } </style> <script src="https://kit.fontawesome.com/578801937d.js" crossorigin="anonymous"></script> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Geo&family=Lato&display=swap" rel="stylesheet"> <div class="footer1"> <span class="text1">Connect with </span> <span class="text1" style="color:#9c51e0;font-family:Geo;font-size:14pt">bioinfo.guru</span> <br> <span class="social_media"> <a href="https://www.facebook.com/profile.php?id=100078250833738"><i class="fa-brands fa-facebook-square social_media"></i></a> <a href="https://www.instagram.com/bioinfo.guru/"><i class="fa-brands fa-instagram-square social_media"></i></a> <a href="https://www.linkedin.com/in/bioinfo-guru-68a8b7231/"><i class="fa-brands fa-linkedin social_media"></i></a> <a href="https://twitter.com/bioinfo_guru"><i class="fa-brands fa-twitter-square social_media"></i></a> </span> </div> 
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#binary-classification-of-protein-sequences">
+   Binary classification of protein sequences
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-building">
+   Model building
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cross-validation">
+   Cross-validation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hyperparameters">
+   Hyperparameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grid-search">
+   Grid Search
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#confusion-matrix">
+   Confusion matrix
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise">
+   Exercise
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="supervised-learning">
+<h1>Supervised learning<a class="headerlink" href="#supervised-learning" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="binary-classification-of-protein-sequences">
+<h2>Binary classification of protein sequences<a class="headerlink" href="#binary-classification-of-protein-sequences" title="Permalink to this headline">¶</a></h2>
+<p>Proteins are polymers made of 20 different amino acids. Proteins have been classified into different families based on their sequence similarity. Positive and negative datasets corresponding to one of the protein families are available <a class="reference external" href="https://webs.iiitd.edu.in/raghava/icaars/supplementary.html">here</a></p>
+<p><strong>Extract features from the protein sequences</strong></p>
+<p>Amino Acid Composition refers to frequency of each amino acid within a protein sequence. E.g. if a protein has a sequence ‘MSAARQTTRKAE’ it’s amino acid composition can be represented as a vector of length 20:</p>
+<p>‘A’:3,’C’:0,’D’:0,’E’:1,’F’:0,’G’:0,’H’:0,’I’:0,’K’:1,’L’:0,’M’:1,’N’:0,’P’:0,’Q’:1,’R’:1,’S’:1,’T’:2,’V’:0,’W’:0,’Y’:0</p>
+<p>In this way any protein sequence can be represented as a feature vector of fixed length. This is important because the protein sequences, even within the same class, can have different number of amino acids.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">Bio</span> <span class="kn">import</span> <span class="n">SeqIO</span>
+<span class="kn">from</span> <span class="nn">Bio.SeqUtils.ProtParam</span> <span class="kn">import</span> <span class="n">ProteinAnalysis</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">model_selection</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">positive_dict</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;positive-aars.fasta&quot;</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">))</span>
+<span class="n">negative_dict</span> <span class="o">=</span> <span class="n">SeqIO</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">SeqIO</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;negative-aars.fasta&quot;</span><span class="p">,</span> <span class="s2">&quot;fasta&quot;</span><span class="p">))</span>
+
+<span class="c1">## Amino acid composition calculation##</span>
+<span class="c1">#c1 = ProteinAnalysis(&quot;AAAASTRRRTRRAWEQWERQW&quot;).count_amino_acids()</span>
+<span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">keys</span><span class="p">,</span><span class="n">values</span> <span class="ow">in</span> <span class="n">positive_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ProteinAnalysis</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">seq</span><span class="p">))</span><span class="o">.</span><span class="n">get_amino_acids_percent</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">keys</span><span class="p">,</span><span class="n">values</span> <span class="ow">in</span> <span class="n">negative_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">ProteinAnalysis</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">seq</span><span class="p">))</span><span class="o">.</span><span class="n">get_amino_acids_percent</span><span class="p">(),</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;-1&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of positive samples: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">positive_dict</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of negative samples: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">negative_dict</span><span class="p">))</span>
+
+<span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of positive samples:  117
+Number of negative samples:  117
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>C</th>
+      <th>D</th>
+      <th>E</th>
+      <th>F</th>
+      <th>G</th>
+      <th>H</th>
+      <th>I</th>
+      <th>K</th>
+      <th>L</th>
+      <th>M</th>
+      <th>N</th>
+      <th>P</th>
+      <th>Q</th>
+      <th>R</th>
+      <th>S</th>
+      <th>T</th>
+      <th>V</th>
+      <th>W</th>
+      <th>Y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.035928</td>
+      <td>0.007984</td>
+      <td>0.041916</td>
+      <td>0.131737</td>
+      <td>0.055888</td>
+      <td>0.049900</td>
+      <td>0.017964</td>
+      <td>0.081836</td>
+      <td>0.119760</td>
+      <td>0.107784</td>
+      <td>0.015968</td>
+      <td>0.037924</td>
+      <td>0.037924</td>
+      <td>0.011976</td>
+      <td>0.037924</td>
+      <td>0.055888</td>
+      <td>0.049900</td>
+      <td>0.057884</td>
+      <td>0.013972</td>
+      <td>0.029940</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.076233</td>
+      <td>0.004484</td>
+      <td>0.049327</td>
+      <td>0.065770</td>
+      <td>0.029895</td>
+      <td>0.082212</td>
+      <td>0.020927</td>
+      <td>0.055306</td>
+      <td>0.082212</td>
+      <td>0.074738</td>
+      <td>0.040359</td>
+      <td>0.037369</td>
+      <td>0.043348</td>
+      <td>0.056801</td>
+      <td>0.058296</td>
+      <td>0.055306</td>
+      <td>0.061286</td>
+      <td>0.053812</td>
+      <td>0.017937</td>
+      <td>0.034380</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.093333</td>
+      <td>0.009524</td>
+      <td>0.068571</td>
+      <td>0.080000</td>
+      <td>0.026667</td>
+      <td>0.120000</td>
+      <td>0.024762</td>
+      <td>0.059048</td>
+      <td>0.055238</td>
+      <td>0.095238</td>
+      <td>0.028571</td>
+      <td>0.015238</td>
+      <td>0.041905</td>
+      <td>0.019048</td>
+      <td>0.074286</td>
+      <td>0.060952</td>
+      <td>0.020952</td>
+      <td>0.053333</td>
+      <td>0.009524</td>
+      <td>0.043810</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.079470</td>
+      <td>0.036424</td>
+      <td>0.052980</td>
+      <td>0.067881</td>
+      <td>0.046358</td>
+      <td>0.072848</td>
+      <td>0.023179</td>
+      <td>0.046358</td>
+      <td>0.021523</td>
+      <td>0.117550</td>
+      <td>0.019868</td>
+      <td>0.016556</td>
+      <td>0.046358</td>
+      <td>0.039735</td>
+      <td>0.081126</td>
+      <td>0.072848</td>
+      <td>0.049669</td>
+      <td>0.072848</td>
+      <td>0.008278</td>
+      <td>0.028146</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.084158</td>
+      <td>0.003300</td>
+      <td>0.046205</td>
+      <td>0.094059</td>
+      <td>0.034653</td>
+      <td>0.077558</td>
+      <td>0.018152</td>
+      <td>0.061056</td>
+      <td>0.089109</td>
+      <td>0.099010</td>
+      <td>0.036304</td>
+      <td>0.057756</td>
+      <td>0.031353</td>
+      <td>0.029703</td>
+      <td>0.026403</td>
+      <td>0.047855</td>
+      <td>0.042904</td>
+      <td>0.061056</td>
+      <td>0.011551</td>
+      <td>0.047855</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>-1</th>
+      <td>0.087221</td>
+      <td>0.004057</td>
+      <td>0.050710</td>
+      <td>0.060852</td>
+      <td>0.034483</td>
+      <td>0.068966</td>
+      <td>0.020284</td>
+      <td>0.056795</td>
+      <td>0.070994</td>
+      <td>0.089249</td>
+      <td>0.020284</td>
+      <td>0.036511</td>
+      <td>0.050710</td>
+      <td>0.042596</td>
+      <td>0.054767</td>
+      <td>0.079108</td>
+      <td>0.052738</td>
+      <td>0.075051</td>
+      <td>0.004057</td>
+      <td>0.040568</td>
+    </tr>
+    <tr>
+      <th>-1</th>
+      <td>0.067901</td>
+      <td>0.009259</td>
+      <td>0.049383</td>
+      <td>0.030864</td>
+      <td>0.027778</td>
+      <td>0.055556</td>
+      <td>0.024691</td>
+      <td>0.037037</td>
+      <td>0.030864</td>
+      <td>0.080247</td>
+      <td>0.015432</td>
+      <td>0.040123</td>
+      <td>0.111111</td>
+      <td>0.080247</td>
+      <td>0.104938</td>
+      <td>0.101852</td>
+      <td>0.058642</td>
+      <td>0.030864</td>
+      <td>0.018519</td>
+      <td>0.024691</td>
+    </tr>
+    <tr>
+      <th>-1</th>
+      <td>0.053521</td>
+      <td>0.010329</td>
+      <td>0.056338</td>
+      <td>0.101408</td>
+      <td>0.037559</td>
+      <td>0.037559</td>
+      <td>0.014085</td>
+      <td>0.059155</td>
+      <td>0.082629</td>
+      <td>0.110798</td>
+      <td>0.025352</td>
+      <td>0.059155</td>
+      <td>0.029108</td>
+      <td>0.047887</td>
+      <td>0.061033</td>
+      <td>0.078873</td>
+      <td>0.048826</td>
+      <td>0.046948</td>
+      <td>0.005634</td>
+      <td>0.033803</td>
+    </tr>
+    <tr>
+      <th>-1</th>
+      <td>0.038462</td>
+      <td>0.022869</td>
+      <td>0.070686</td>
+      <td>0.062370</td>
+      <td>0.062370</td>
+      <td>0.024948</td>
+      <td>0.014553</td>
+      <td>0.066528</td>
+      <td>0.060291</td>
+      <td>0.121622</td>
+      <td>0.016632</td>
+      <td>0.069647</td>
+      <td>0.027027</td>
+      <td>0.040541</td>
+      <td>0.050936</td>
+      <td>0.096674</td>
+      <td>0.061331</td>
+      <td>0.058212</td>
+      <td>0.009356</td>
+      <td>0.024948</td>
+    </tr>
+    <tr>
+      <th>-1</th>
+      <td>0.042791</td>
+      <td>0.014884</td>
+      <td>0.055814</td>
+      <td>0.071628</td>
+      <td>0.058605</td>
+      <td>0.032558</td>
+      <td>0.020465</td>
+      <td>0.053953</td>
+      <td>0.071628</td>
+      <td>0.110698</td>
+      <td>0.010233</td>
+      <td>0.054884</td>
+      <td>0.044651</td>
+      <td>0.042791</td>
+      <td>0.059535</td>
+      <td>0.102326</td>
+      <td>0.040930</td>
+      <td>0.054884</td>
+      <td>0.013023</td>
+      <td>0.043721</td>
+    </tr>
+  </tbody>
+</table>
+<p>234 rows × 20 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#correlation between different features </span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df1</span><span class="o">.</span><span class="n">corr</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:&gt;
+</pre></div>
+</div>
+<img alt="_images/ML_supervised_4_1.png" src="_images/ML_supervised_4_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="model-building">
+<h2>Model building<a class="headerlink" href="#model-building" title="Permalink to this headline">¶</a></h2>
+<p>Create data and label matrices.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1_matrix</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="c1">## X matrix</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span> <span class="c1">## Y matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Create training and testing datasets, build the model and check prediction accuracy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split-out validation dataset&quot;</span>
+<span class="n">validation_size</span> <span class="o">=</span> <span class="mf">0.20</span> <span class="c1"># 20% data for testing</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># change to int for reproducibility</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_validation</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_validation</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">df1_matrix</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> \
+                                                                               <span class="n">test_size</span><span class="o">=</span><span class="n">validation_size</span><span class="p">,</span> \
+                                                                                <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+<span class="n">new_clf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">()</span>
+<span class="n">model1</span> <span class="o">=</span> <span class="n">new_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">)</span>
+<span class="n">Y_predicted</span> <span class="o">=</span> <span class="n">model1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_validation</span><span class="p">)</span>
+<span class="n">score1</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">Y_predicted</span><span class="p">,</span> <span class="n">Y_validation</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">score1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8085106382978723
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1_matrix</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(234, 20)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="cross-validation">
+<h2>Cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+
+<span class="c1"># Test options and evaluation metric</span>
+<span class="n">scoring</span> <span class="o">=</span> <span class="s1">&#39;accuracy&#39;</span>
+
+<span class="n">kfold</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv_results</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">SVC</span><span class="p">(),</span> <span class="n">df1_matrix</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cv_results</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cv_results</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">cv_results</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.38297872 0.34042553 0.65957447 0.34042553 0.30434783]
+0.40555041628122107 0.12943119067958725
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SVC</span><span class="p">()</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;C&#39;: 1.0,
+ &#39;break_ties&#39;: False,
+ &#39;cache_size&#39;: 200,
+ &#39;class_weight&#39;: None,
+ &#39;coef0&#39;: 0.0,
+ &#39;decision_function_shape&#39;: &#39;ovr&#39;,
+ &#39;degree&#39;: 3,
+ &#39;gamma&#39;: &#39;scale&#39;,
+ &#39;kernel&#39;: &#39;rbf&#39;,
+ &#39;max_iter&#39;: -1,
+ &#39;probability&#39;: False,
+ &#39;random_state&#39;: None,
+ &#39;shrinking&#39;: True,
+ &#39;tol&#39;: 0.001,
+ &#39;verbose&#39;: False}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="hyperparameters">
+<h2>Hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_poly</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">clf_rbf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">kfold</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv_SVM_poly_results</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf_poly</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+<span class="n">cv_SVM_rbf_results</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf_rbf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">cv_SVM_poly_results</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">cv_SVM_rbf_results</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7423897581792318 0.7533428165007112
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_poly</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">clf_rbf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">kfold</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv_SVM_poly_results</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf_poly</span><span class="p">,</span> <span class="n">df1_matrix</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+<span class="n">cv_SVM_rbf_results</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf_rbf</span><span class="p">,</span> <span class="n">df1_matrix</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cv_SVM_rbf_results</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">cv_SVM_poly_results</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">cv_SVM_rbf_results</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.70212766 0.65957447 0.78723404 0.5106383  0.65217391]
+0.6281221091581869 0.6623496762257168
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="grid-search">
+<h2>Grid Search<a class="headerlink" href="#grid-search" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="n">tuned_parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;rbf&#39;</span><span class="p">],</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mf">1e-4</span><span class="p">],</span>
+                     <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]},</span>
+                    <span class="p">{</span><span class="s1">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">],</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]},</span>
+                    <span class="p">{</span><span class="s1">&#39;kernel&#39;</span><span class="p">:[</span><span class="s1">&#39;poly&#39;</span><span class="p">],</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">],</span>
+                     <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)}]</span>
+<span class="n">clf_grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">SVC</span><span class="p">(),</span> <span class="n">tuned_parameters</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+<span class="n">clf_grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df1_matrix</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GridSearchCV(cv=5, estimator=SVC(),
+             param_grid=[{&#39;C&#39;: [1, 10, 100, 1000, 10000],
+                          &#39;gamma&#39;: [0.001, 0.0001], &#39;kernel&#39;: [&#39;rbf&#39;]},
+                         {&#39;C&#39;: [1, 10, 100, 1000, 10000], &#39;kernel&#39;: [&#39;linear&#39;]},
+                         {&#39;C&#39;: [1, 10, 100, 1000, 10000],
+                          &#39;degree&#39;: range(0, 10), &#39;kernel&#39;: [&#39;poly&#39;]}],
+             scoring=&#39;accuracy&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">clf_grid</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="c1">#print(clf_grid.cv_results_)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;C&#39;: 1, &#39;degree&#39;: 3, &#39;kernel&#39;: &#39;poly&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Build a SVM model using above hyperparameters and check the prediction accuracy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_poly</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">kfold</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cv_SVM_results</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf_poly</span><span class="p">,</span> <span class="n">df1_matrix</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kfold</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cv_SVM_results</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">cv_SVM_results</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">cv_SVM_results</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.70212766 0.65957447 0.76595745 0.40425532 0.60869565]
+0.6281221091581869 0.12325451681757636
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="confusion-matrix">
+<h2>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clf_new</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span><span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1">## Fit model to the data ##</span>
+<span class="n">clf_new</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df1_matrix</span><span class="p">,</span><span class="n">labels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+
+<span class="c1">## Predict labels for the original data ##</span>
+<span class="n">clf_new_predict</span> <span class="o">=</span> <span class="n">clf_new</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">df1_matrix</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">clf_new_predict</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({&#39;1&#39;: 117, &#39;-1&#39;: 117})
+Counter({&#39;-1&#39;: 121, &#39;1&#39;: 113})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span><span class="n">clf_new_predict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted labels&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;True labels&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">&#39;positive&#39;</span><span class="p">,</span> <span class="s1">&#39;negative&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">([</span><span class="s1">&#39;positive&#39;</span><span class="p">,</span> <span class="s1">&#39;negative&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[108   9]
+ [ 13 104]]
+</pre></div>
+</div>
+<img alt="_images/ML_supervised_24_1.png" src="_images/ML_supervised_24_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p><strong>Extract another feature - Di-Peptide Composition (DPC)</strong></p>
+<p>For each sequence calculate the frequency of pairwaise occurrence of amino acids. The length of the feature vector for each sequence would be 400 (20 x 20). Construct a classification model using DPC as a feature and compare the results with classification using amino acid composition.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="n">aa_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;E&#39;</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;G&#39;</span><span class="p">,</span><span class="s1">&#39;H&#39;</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">,</span><span class="s1">&#39;K&#39;</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="s1">&#39;P&#39;</span><span class="p">,</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span><span class="s1">&#39;R&#39;</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">,</span><span class="s1">&#39;T&#39;</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">,</span><span class="s1">&#39;W&#39;</span><span class="p">,</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Create a series of dipeptides</span>
+<span class="n">dpc_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">aa_list</span><span class="p">,</span><span class="n">aa_list</span><span class="p">):</span>
+    <span class="n">dpc_series</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">)])]</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_dpc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([])</span>
+<span class="k">for</span> <span class="n">keys</span><span class="p">,</span><span class="n">values</span> <span class="ow">in</span> <span class="n">positive_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">dpc_series_copy</span> <span class="o">=</span> <span class="n">dpc_series</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="c1">#    print (values.seq)</span>
+    <span class="n">dpc_seq</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">seq</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">seq</span><span class="p">))]</span>
+    <span class="k">del</span> <span class="n">dpc_seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">dpc_seq</span><span class="p">:</span>
+        <span class="n">dpc_series_copy</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">dpc_series_copy</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span>
+    <span class="n">dpc_series_copy</span> <span class="o">*=</span> <span class="mi">100</span>
+    <span class="n">df_dpc</span> <span class="o">=</span> <span class="n">df_dpc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dpc_series_copy</span><span class="p">)</span>
+<span class="c1">#dpc_series_copy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_dpc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AA</th>
+      <th>AC</th>
+      <th>AD</th>
+      <th>AE</th>
+      <th>AF</th>
+      <th>AG</th>
+      <th>AH</th>
+      <th>AI</th>
+      <th>AK</th>
+      <th>AL</th>
+      <th>...</th>
+      <th>YM</th>
+      <th>YN</th>
+      <th>YP</th>
+      <th>YQ</th>
+      <th>YR</th>
+      <th>YS</th>
+      <th>YT</th>
+      <th>YV</th>
+      <th>YW</th>
+      <th>YY</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.399202</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.399202</td>
+      <td>0.399202</td>
+      <td>0.399202</td>
+      <td>0.199601</td>
+      <td>0.199601</td>
+      <td>0.598802</td>
+      <td>0.199601</td>
+      <td>...</td>
+      <td>0.199601</td>
+      <td>0.000000</td>
+      <td>0.598802</td>
+      <td>0.199601</td>
+      <td>0.000000</td>
+      <td>0.199601</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.345291</td>
+      <td>0.000000</td>
+      <td>0.149477</td>
+      <td>0.747384</td>
+      <td>0.149477</td>
+      <td>0.597907</td>
+      <td>0.149477</td>
+      <td>0.298954</td>
+      <td>0.896861</td>
+      <td>0.448430</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.298954</td>
+      <td>0.448430</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.298954</td>
+      <td>0.597907</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.571429</td>
+      <td>0.000000</td>
+      <td>0.761905</td>
+      <td>0.761905</td>
+      <td>0.380952</td>
+      <td>1.142857</td>
+      <td>0.190476</td>
+      <td>0.380952</td>
+      <td>0.571429</td>
+      <td>1.142857</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.761905</td>
+      <td>0.190476</td>
+      <td>0.190476</td>
+      <td>0.190476</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.331126</td>
+      <td>0.165563</td>
+      <td>0.331126</td>
+      <td>0.496689</td>
+      <td>0.662252</td>
+      <td>0.662252</td>
+      <td>0.331126</td>
+      <td>0.000000</td>
+      <td>0.165563</td>
+      <td>0.496689</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.165563</td>
+      <td>0.165563</td>
+      <td>0.331126</td>
+      <td>0.827815</td>
+      <td>0.331126</td>
+      <td>0.000000</td>
+      <td>0.165563</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.495050</td>
+      <td>0.000000</td>
+      <td>0.660066</td>
+      <td>0.990099</td>
+      <td>0.165017</td>
+      <td>0.660066</td>
+      <td>0.000000</td>
+      <td>0.165017</td>
+      <td>0.825083</td>
+      <td>0.825083</td>
+      <td>...</td>
+      <td>0.165017</td>
+      <td>0.495050</td>
+      <td>0.165017</td>
+      <td>0.165017</td>
+      <td>0.165017</td>
+      <td>0.165017</td>
+      <td>0.165017</td>
+      <td>0.330033</td>
+      <td>0.0</td>
+      <td>0.330033</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.790514</td>
+      <td>0.000000</td>
+      <td>0.592885</td>
+      <td>0.395257</td>
+      <td>0.592885</td>
+      <td>0.592885</td>
+      <td>0.197628</td>
+      <td>0.197628</td>
+      <td>1.185771</td>
+      <td>0.395257</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.197628</td>
+      <td>0.000000</td>
+      <td>0.395257</td>
+      <td>0.197628</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.401606</td>
+      <td>0.000000</td>
+      <td>0.401606</td>
+      <td>0.200803</td>
+      <td>1.004016</td>
+      <td>0.200803</td>
+      <td>0.401606</td>
+      <td>0.000000</td>
+      <td>0.803213</td>
+      <td>0.200803</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.401606</td>
+      <td>0.200803</td>
+      <td>0.602410</td>
+      <td>0.200803</td>
+      <td>0.803213</td>
+      <td>0.0</td>
+      <td>0.401606</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.923977</td>
+      <td>0.000000</td>
+      <td>1.754386</td>
+      <td>1.949318</td>
+      <td>1.169591</td>
+      <td>0.779727</td>
+      <td>0.194932</td>
+      <td>0.389864</td>
+      <td>0.000000</td>
+      <td>1.559454</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.194932</td>
+      <td>0.000000</td>
+      <td>0.584795</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.114416</td>
+      <td>0.114416</td>
+      <td>0.114416</td>
+      <td>0.114416</td>
+      <td>0.114416</td>
+      <td>0.114416</td>
+      <td>0.343249</td>
+      <td>0.114416</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.228833</td>
+      <td>0.228833</td>
+      <td>0.000000</td>
+      <td>0.228833</td>
+      <td>0.228833</td>
+      <td>0.228833</td>
+      <td>0.228833</td>
+      <td>0.0</td>
+      <td>0.228833</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000000</td>
+      <td>0.142653</td>
+      <td>0.285307</td>
+      <td>0.000000</td>
+      <td>0.570613</td>
+      <td>0.000000</td>
+      <td>0.285307</td>
+      <td>0.855920</td>
+      <td>0.570613</td>
+      <td>1.711840</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.142653</td>
+      <td>0.427960</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.142653</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.285307</td>
+    </tr>
+  </tbody>
+</table>
+<p>117 rows × 400 columns</p>
+</div></div></div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="kmeans.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Unsupervised learning</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Manish Datt (manish@bioinfo.guru)<br/>
+        
+            &copy; Copyright 2022 bioinfo.guru.<br/>
+          <div class="extra_footer">
+            <a href="https://bioinfo.guru">Online course catalogue</a>
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
