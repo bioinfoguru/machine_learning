@@ -1,0 +1,1784 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Principal Component Analysis &#8212; Machine Learning</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Supervised learning" href="ML_supervised.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo_final_horizontal.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="kmeans.html">
+   Unsupervised learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="ML_supervised.html">
+   Supervised learning
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Principal Component Analysis
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+   <style> .text1{font-size=18pt;} .footer1{ margin: 2em; text-align: center; } .social_media{ color: #9c51e0; font-size: 1.5em; word-spacing: 0.5em; } </style> <script src="https://kit.fontawesome.com/578801937d.js" crossorigin="anonymous"></script> <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Geo&family=Lato&display=swap" rel="stylesheet"> <div class="footer1"> <span class="text1">Connect with </span> <span class="text1" style="color:#9c51e0;font-family:Geo;font-size:14pt">bioinfo.guru</span> <br> <span class="social_media"> <a href="https://www.facebook.com/profile.php?id=100078250833738"><i class="fa-brands fa-facebook-square social_media"></i></a> <a href="https://www.instagram.com/bioinfo.guru/"><i class="fa-brands fa-instagram-square social_media"></i></a> <a href="https://www.linkedin.com/in/bioinfo-guru-68a8b7231/"><i class="fa-brands fa-linkedin social_media"></i></a> <a href="https://twitter.com/bioinfo_guru"><i class="fa-brands fa-twitter-square social_media"></i></a> </span> </div> 
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#data-pre-processing">
+   Data pre-processing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-building">
+   Model building
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pca-loadings">
+   PCA Loadings
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#biplot">
+   Biplot
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise">
+   Exercise
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="principal-component-analysis">
+<h1>Principal Component Analysis<a class="headerlink" href="#principal-component-analysis" title="Permalink to this headline">¶</a></h1>
+<p>PCA is an unsupervised learning algorithm which is widely used to reduce the dimensions of large datasets. It can also be used for feature extraction such that we can use a limited number of features. PCA helps to identify feature(s) that contributes maximally to the variance in the data.</p>
+<p>PCA transforms the original data to a lower dimensional space while minimizing the information loss.</p>
+<p>Here we’ll use a dataset from <a class="reference external" href="https://www.pnas.org/doi/pdf/10.1073/pnas.1904964116">this manuscript</a> to receate some of the analysis presented in the manuscript. This manuscript presents analysis of 8 phenotypic traits in 169 <em>japonica</em> rice varieties. The data used here is available in the supplementary material of the manuscript <a class="reference external" href="https://www.pnas.org/doi/suppl/10.1073/pnas.1904964116/suppl_file/pnas.1904964116.sd01.xlsx">download</a>. Save this excel file in csv format.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">load</span> <span class="n">pnas_suppl</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Read data in csv format having parameters for different aspect of the plant over two years. Columns 3 to 10 and 11 to 18 for 2014 and 2015, respectively. The first column is “Line number” so we’ll use that as index for our dataframe and second column is plant variety. There is no header row in the csv file. Let’s read the data and preprocess it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;pnas_suppl.csv&quot;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>10</th>
+      <th>11</th>
+      <th>12</th>
+      <th>13</th>
+      <th>14</th>
+      <th>15</th>
+      <th>16</th>
+      <th>17</th>
+    </tr>
+    <tr>
+      <th>0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Line 1</th>
+      <td>GORIKI</td>
+      <td>98</td>
+      <td>112.0</td>
+      <td>7.0</td>
+      <td>26.7</td>
+      <td>19.6</td>
+      <td>12.7</td>
+      <td>41.3</td>
+      <td>206.3</td>
+      <td>101</td>
+      <td>117.1</td>
+      <td>8.3</td>
+      <td>25.4</td>
+      <td>21.0</td>
+      <td>13.7</td>
+      <td>46.7</td>
+      <td>221.7</td>
+    </tr>
+    <tr>
+      <th>Line 2</th>
+      <td>HINOMARU</td>
+      <td>87</td>
+      <td>95.7</td>
+      <td>9.0</td>
+      <td>23.4</td>
+      <td>18.6</td>
+      <td>12.7</td>
+      <td>39.0</td>
+      <td>199.0</td>
+      <td>87</td>
+      <td>99.8</td>
+      <td>7.7</td>
+      <td>23.6</td>
+      <td>17.3</td>
+      <td>12.0</td>
+      <td>41.8</td>
+      <td>213.0</td>
+    </tr>
+    <tr>
+      <th>Line 3</th>
+      <td>MANGOKU</td>
+      <td>93</td>
+      <td>109.7</td>
+      <td>9.0</td>
+      <td>24.6</td>
+      <td>20.7</td>
+      <td>16.7</td>
+      <td>36.0</td>
+      <td>210.0</td>
+      <td>91</td>
+      <td>106.0</td>
+      <td>10.7</td>
+      <td>23.6</td>
+      <td>18.3</td>
+      <td>14.7</td>
+      <td>32.0</td>
+      <td>177.7</td>
+    </tr>
+    <tr>
+      <th>Line 4</th>
+      <td>KAIRYO SHINKOU</td>
+      <td>89</td>
+      <td>82.6</td>
+      <td>9.0</td>
+      <td>22.8</td>
+      <td>16.1</td>
+      <td>9.7</td>
+      <td>26.3</td>
+      <td>139.7</td>
+      <td>87</td>
+      <td>86.3</td>
+      <td>7.3</td>
+      <td>25.3</td>
+      <td>19.6</td>
+      <td>12.7</td>
+      <td>35.7</td>
+      <td>182.0</td>
+    </tr>
+    <tr>
+      <th>Line 5</th>
+      <td>SENICHI</td>
+      <td>98</td>
+      <td>103.1</td>
+      <td>11.0</td>
+      <td>23.1</td>
+      <td>17.1</td>
+      <td>10.3</td>
+      <td>24.3</td>
+      <td>136.0</td>
+      <td>98</td>
+      <td>102.0</td>
+      <td>14.0</td>
+      <td>26.0</td>
+      <td>20.0</td>
+      <td>11.7</td>
+      <td>26.7</td>
+      <td>140.3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Line 165</th>
+      <td>HIMENOMOCHI</td>
+      <td>87</td>
+      <td>74.8</td>
+      <td>7.0</td>
+      <td>20.0</td>
+      <td>13.7</td>
+      <td>10.3</td>
+      <td>25.7</td>
+      <td>137.3</td>
+      <td>81</td>
+      <td>82.8</td>
+      <td>10.3</td>
+      <td>21.5</td>
+      <td>15.8</td>
+      <td>13.7</td>
+      <td>30.0</td>
+      <td>165.7</td>
+    </tr>
+    <tr>
+      <th>Line 166</th>
+      <td>SHINSHUU</td>
+      <td>92</td>
+      <td>91.3</td>
+      <td>16.0</td>
+      <td>20.1</td>
+      <td>13.4</td>
+      <td>11.7</td>
+      <td>9.7</td>
+      <td>93.0</td>
+      <td>91</td>
+      <td>85.8</td>
+      <td>11.3</td>
+      <td>20.3</td>
+      <td>14.5</td>
+      <td>10.3</td>
+      <td>16.0</td>
+      <td>102.0</td>
+    </tr>
+    <tr>
+      <th>Line 167</th>
+      <td>AICHI ASAHI_2***</td>
+      <td>113</td>
+      <td>84.3</td>
+      <td>12.0</td>
+      <td>23.4</td>
+      <td>16.7</td>
+      <td>9.0</td>
+      <td>23.0</td>
+      <td>123.7</td>
+      <td>107</td>
+      <td>88.3</td>
+      <td>10.7</td>
+      <td>24.8</td>
+      <td>18.6</td>
+      <td>10.0</td>
+      <td>25.7</td>
+      <td>141.0</td>
+    </tr>
+    <tr>
+      <th>Line 168</th>
+      <td>RAIDEN</td>
+      <td>113</td>
+      <td>111.8</td>
+      <td>11.0</td>
+      <td>26.4</td>
+      <td>19.7</td>
+      <td>11.7</td>
+      <td>36.7</td>
+      <td>183.0</td>
+      <td>109</td>
+      <td>108.3</td>
+      <td>8.7</td>
+      <td>24.7</td>
+      <td>18.9</td>
+      <td>12.3</td>
+      <td>36.3</td>
+      <td>165.3</td>
+    </tr>
+    <tr>
+      <th>Line 169</th>
+      <td>HOUMANSHINDEN INE</td>
+      <td>124</td>
+      <td>107.9</td>
+      <td>15.0</td>
+      <td>22.7</td>
+      <td>18.2</td>
+      <td>16.0</td>
+      <td>17.7</td>
+      <td>175.0</td>
+      <td>120</td>
+      <td>122.0</td>
+      <td>12.3</td>
+      <td>23.6</td>
+      <td>18.7</td>
+      <td>13.7</td>
+      <td>42.3</td>
+      <td>220.7</td>
+    </tr>
+  </tbody>
+</table>
+<p>169 rows × 17 columns</p>
+</div></div></div>
+</div>
+<div class="section" id="data-pre-processing">
+<h2>Data pre-processing<a class="headerlink" href="#data-pre-processing" title="Permalink to this headline">¶</a></h2>
+<p>Next, we’ll extract the data for the two years separately and merge them vertically in one dataframe. This reformating would be useful for subsequent analysis. We’ll also add column header to our dataframe. These headers would be the name of different parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df1</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Variety&quot;</span><span class="p">,</span><span class="s2">&quot;Days-to-heading&quot;</span><span class="p">,</span> <span class="s2">&quot;Culm length (cm)&quot;</span><span class="p">,</span><span class="s2">&quot;Panicle No.&quot;</span><span class="p">,</span> <span class="s2">&quot;Panicle length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Rachis length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Primary branch No.&quot;</span><span class="p">,</span> <span class="s2">&quot;Sec. branch No.&quot;</span><span class="p">,</span> <span class="s2">&quot;Spikelet No.&quot;</span><span class="p">]</span>
+<span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">2015</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/x0/nmhy4n_x1x9ff8yq2f9tltkw0000gn/T/ipykernel_1975/580647483.py:2: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  df2[&quot;Year&quot;]=2015
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variety</th>
+      <th>Days-to-heading</th>
+      <th>Culm length (cm)</th>
+      <th>Panicle No.</th>
+      <th>Panicle length (cm)</th>
+      <th>Rachis length (cm)</th>
+      <th>Primary branch No.</th>
+      <th>Sec. branch No.</th>
+      <th>Spikelet No.</th>
+      <th>Year</th>
+    </tr>
+    <tr>
+      <th>0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Line 1</th>
+      <td>GORIKI</td>
+      <td>101</td>
+      <td>117.1</td>
+      <td>8.3</td>
+      <td>25.4</td>
+      <td>21.0</td>
+      <td>13.7</td>
+      <td>46.7</td>
+      <td>221.7</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 2</th>
+      <td>HINOMARU</td>
+      <td>87</td>
+      <td>99.8</td>
+      <td>7.7</td>
+      <td>23.6</td>
+      <td>17.3</td>
+      <td>12.0</td>
+      <td>41.8</td>
+      <td>213.0</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 3</th>
+      <td>MANGOKU</td>
+      <td>91</td>
+      <td>106.0</td>
+      <td>10.7</td>
+      <td>23.6</td>
+      <td>18.3</td>
+      <td>14.7</td>
+      <td>32.0</td>
+      <td>177.7</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 4</th>
+      <td>KAIRYO SHINKOU</td>
+      <td>87</td>
+      <td>86.3</td>
+      <td>7.3</td>
+      <td>25.3</td>
+      <td>19.6</td>
+      <td>12.7</td>
+      <td>35.7</td>
+      <td>182.0</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 5</th>
+      <td>SENICHI</td>
+      <td>98</td>
+      <td>102.0</td>
+      <td>14.0</td>
+      <td>26.0</td>
+      <td>20.0</td>
+      <td>11.7</td>
+      <td>26.7</td>
+      <td>140.3</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Line 165</th>
+      <td>HIMENOMOCHI</td>
+      <td>81</td>
+      <td>82.8</td>
+      <td>10.3</td>
+      <td>21.5</td>
+      <td>15.8</td>
+      <td>13.7</td>
+      <td>30.0</td>
+      <td>165.7</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 166</th>
+      <td>SHINSHUU</td>
+      <td>91</td>
+      <td>85.8</td>
+      <td>11.3</td>
+      <td>20.3</td>
+      <td>14.5</td>
+      <td>10.3</td>
+      <td>16.0</td>
+      <td>102.0</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 167</th>
+      <td>AICHI ASAHI_2***</td>
+      <td>107</td>
+      <td>88.3</td>
+      <td>10.7</td>
+      <td>24.8</td>
+      <td>18.6</td>
+      <td>10.0</td>
+      <td>25.7</td>
+      <td>141.0</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 168</th>
+      <td>RAIDEN</td>
+      <td>109</td>
+      <td>108.3</td>
+      <td>8.7</td>
+      <td>24.7</td>
+      <td>18.9</td>
+      <td>12.3</td>
+      <td>36.3</td>
+      <td>165.3</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 169</th>
+      <td>HOUMANSHINDEN INE</td>
+      <td>120</td>
+      <td>122.0</td>
+      <td>12.3</td>
+      <td>23.6</td>
+      <td>18.7</td>
+      <td>13.7</td>
+      <td>42.3</td>
+      <td>220.7</td>
+      <td>2015</td>
+    </tr>
+  </tbody>
+</table>
+<p>169 rows × 10 columns</p>
+</div></div></div>
+</div>
+<p>Remove that columns from df1 that have been copied to df2 and add headers (same as that in df2) to df1. Also, add the year column to df1 such that df1 would now have data for only 2014.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Variety&quot;</span><span class="p">,</span><span class="s2">&quot;Days-to-heading&quot;</span><span class="p">,</span> <span class="s2">&quot;Culm length (cm)&quot;</span><span class="p">,</span><span class="s2">&quot;Panicle No.&quot;</span><span class="p">,</span> <span class="s2">&quot;Panicle length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Rachis length (cm)&quot;</span><span class="p">,</span> <span class="s2">&quot;Primary branch No.&quot;</span><span class="p">,</span> <span class="s2">&quot;Sec. branch No.&quot;</span><span class="p">,</span> <span class="s2">&quot;Spikelet No.&quot;</span><span class="p">]</span>
+<span class="n">df1</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span><span class="o">=</span><span class="mi">2014</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variety</th>
+      <th>Days-to-heading</th>
+      <th>Culm length (cm)</th>
+      <th>Panicle No.</th>
+      <th>Panicle length (cm)</th>
+      <th>Rachis length (cm)</th>
+      <th>Primary branch No.</th>
+      <th>Sec. branch No.</th>
+      <th>Spikelet No.</th>
+      <th>Year</th>
+    </tr>
+    <tr>
+      <th>0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Line 1</th>
+      <td>GORIKI</td>
+      <td>98</td>
+      <td>112.0</td>
+      <td>7.0</td>
+      <td>26.7</td>
+      <td>19.6</td>
+      <td>12.7</td>
+      <td>41.3</td>
+      <td>206.3</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 2</th>
+      <td>HINOMARU</td>
+      <td>87</td>
+      <td>95.7</td>
+      <td>9.0</td>
+      <td>23.4</td>
+      <td>18.6</td>
+      <td>12.7</td>
+      <td>39.0</td>
+      <td>199.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 3</th>
+      <td>MANGOKU</td>
+      <td>93</td>
+      <td>109.7</td>
+      <td>9.0</td>
+      <td>24.6</td>
+      <td>20.7</td>
+      <td>16.7</td>
+      <td>36.0</td>
+      <td>210.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 4</th>
+      <td>KAIRYO SHINKOU</td>
+      <td>89</td>
+      <td>82.6</td>
+      <td>9.0</td>
+      <td>22.8</td>
+      <td>16.1</td>
+      <td>9.7</td>
+      <td>26.3</td>
+      <td>139.7</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 5</th>
+      <td>SENICHI</td>
+      <td>98</td>
+      <td>103.1</td>
+      <td>11.0</td>
+      <td>23.1</td>
+      <td>17.1</td>
+      <td>10.3</td>
+      <td>24.3</td>
+      <td>136.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Line 165</th>
+      <td>HIMENOMOCHI</td>
+      <td>87</td>
+      <td>74.8</td>
+      <td>7.0</td>
+      <td>20.0</td>
+      <td>13.7</td>
+      <td>10.3</td>
+      <td>25.7</td>
+      <td>137.3</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 166</th>
+      <td>SHINSHUU</td>
+      <td>92</td>
+      <td>91.3</td>
+      <td>16.0</td>
+      <td>20.1</td>
+      <td>13.4</td>
+      <td>11.7</td>
+      <td>9.7</td>
+      <td>93.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 167</th>
+      <td>AICHI ASAHI_2***</td>
+      <td>113</td>
+      <td>84.3</td>
+      <td>12.0</td>
+      <td>23.4</td>
+      <td>16.7</td>
+      <td>9.0</td>
+      <td>23.0</td>
+      <td>123.7</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 168</th>
+      <td>RAIDEN</td>
+      <td>113</td>
+      <td>111.8</td>
+      <td>11.0</td>
+      <td>26.4</td>
+      <td>19.7</td>
+      <td>11.7</td>
+      <td>36.7</td>
+      <td>183.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 169</th>
+      <td>HOUMANSHINDEN INE</td>
+      <td>124</td>
+      <td>107.9</td>
+      <td>15.0</td>
+      <td>22.7</td>
+      <td>18.2</td>
+      <td>16.0</td>
+      <td>17.7</td>
+      <td>175.0</td>
+      <td>2014</td>
+    </tr>
+  </tbody>
+</table>
+<p>169 rows × 10 columns</p>
+</div></div></div>
+</div>
+<p>Now we have two dataframes having plant parameters for the two years i.e. df1 and df2 corresponding to 2014 and 2015, respectively. Let’s combine these two dataframes vertically to get the full data as one dataframe.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span><span class="n">df2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_final</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Variety</th>
+      <th>Days-to-heading</th>
+      <th>Culm length (cm)</th>
+      <th>Panicle No.</th>
+      <th>Panicle length (cm)</th>
+      <th>Rachis length (cm)</th>
+      <th>Primary branch No.</th>
+      <th>Sec. branch No.</th>
+      <th>Spikelet No.</th>
+      <th>Year</th>
+    </tr>
+    <tr>
+      <th>0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Line 1</th>
+      <td>GORIKI</td>
+      <td>98</td>
+      <td>112.0</td>
+      <td>7.0</td>
+      <td>26.7</td>
+      <td>19.6</td>
+      <td>12.7</td>
+      <td>41.3</td>
+      <td>206.3</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 2</th>
+      <td>HINOMARU</td>
+      <td>87</td>
+      <td>95.7</td>
+      <td>9.0</td>
+      <td>23.4</td>
+      <td>18.6</td>
+      <td>12.7</td>
+      <td>39.0</td>
+      <td>199.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 3</th>
+      <td>MANGOKU</td>
+      <td>93</td>
+      <td>109.7</td>
+      <td>9.0</td>
+      <td>24.6</td>
+      <td>20.7</td>
+      <td>16.7</td>
+      <td>36.0</td>
+      <td>210.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 4</th>
+      <td>KAIRYO SHINKOU</td>
+      <td>89</td>
+      <td>82.6</td>
+      <td>9.0</td>
+      <td>22.8</td>
+      <td>16.1</td>
+      <td>9.7</td>
+      <td>26.3</td>
+      <td>139.7</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>Line 5</th>
+      <td>SENICHI</td>
+      <td>98</td>
+      <td>103.1</td>
+      <td>11.0</td>
+      <td>23.1</td>
+      <td>17.1</td>
+      <td>10.3</td>
+      <td>24.3</td>
+      <td>136.0</td>
+      <td>2014</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Line 165</th>
+      <td>HIMENOMOCHI</td>
+      <td>81</td>
+      <td>82.8</td>
+      <td>10.3</td>
+      <td>21.5</td>
+      <td>15.8</td>
+      <td>13.7</td>
+      <td>30.0</td>
+      <td>165.7</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 166</th>
+      <td>SHINSHUU</td>
+      <td>91</td>
+      <td>85.8</td>
+      <td>11.3</td>
+      <td>20.3</td>
+      <td>14.5</td>
+      <td>10.3</td>
+      <td>16.0</td>
+      <td>102.0</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 167</th>
+      <td>AICHI ASAHI_2***</td>
+      <td>107</td>
+      <td>88.3</td>
+      <td>10.7</td>
+      <td>24.8</td>
+      <td>18.6</td>
+      <td>10.0</td>
+      <td>25.7</td>
+      <td>141.0</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 168</th>
+      <td>RAIDEN</td>
+      <td>109</td>
+      <td>108.3</td>
+      <td>8.7</td>
+      <td>24.7</td>
+      <td>18.9</td>
+      <td>12.3</td>
+      <td>36.3</td>
+      <td>165.3</td>
+      <td>2015</td>
+    </tr>
+    <tr>
+      <th>Line 169</th>
+      <td>HOUMANSHINDEN INE</td>
+      <td>120</td>
+      <td>122.0</td>
+      <td>12.3</td>
+      <td>23.6</td>
+      <td>18.7</td>
+      <td>13.7</td>
+      <td>42.3</td>
+      <td>220.7</td>
+      <td>2015</td>
+    </tr>
+  </tbody>
+</table>
+<p>338 rows × 10 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_temp</span> <span class="o">=</span> <span class="n">df_final</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_temp</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)],</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;deep&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x1376039d0&gt;
+</pre></div>
+</div>
+<img alt="_images/PCA_tutorial_17_1.png" src="_images/PCA_tutorial_17_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="model-building">
+<h2>Model building<a class="headerlink" href="#model-building" title="Permalink to this headline">¶</a></h2>
+<p>Perform the PCA using the normalized feature vectors to generate five components. We’ll first create an object of the PCA class with five as the value for n_components argument. Subsequently we’ll use the normalized matrix to generate principle components and save the results to a dataframe. We’ll first do PCA of the 2015 data only.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_2015</span> <span class="o">=</span> <span class="n">df_final</span><span class="p">[</span><span class="n">df_final</span><span class="p">[</span><span class="s2">&quot;Year&quot;</span><span class="p">]</span><span class="o">==</span><span class="mi">2015</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Exclude the Variety column</span>
+<span class="n">df_2015</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Days-to-heading</th>
+      <th>Culm length (cm)</th>
+      <th>Panicle No.</th>
+      <th>Panicle length (cm)</th>
+      <th>Rachis length (cm)</th>
+      <th>Primary branch No.</th>
+      <th>Sec. branch No.</th>
+      <th>Spikelet No.</th>
+    </tr>
+    <tr>
+      <th>0</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Line 1</th>
+      <td>101</td>
+      <td>117.1</td>
+      <td>8.3</td>
+      <td>25.4</td>
+      <td>21.0</td>
+      <td>13.7</td>
+      <td>46.7</td>
+      <td>221.7</td>
+    </tr>
+    <tr>
+      <th>Line 2</th>
+      <td>87</td>
+      <td>99.8</td>
+      <td>7.7</td>
+      <td>23.6</td>
+      <td>17.3</td>
+      <td>12.0</td>
+      <td>41.8</td>
+      <td>213.0</td>
+    </tr>
+    <tr>
+      <th>Line 3</th>
+      <td>91</td>
+      <td>106.0</td>
+      <td>10.7</td>
+      <td>23.6</td>
+      <td>18.3</td>
+      <td>14.7</td>
+      <td>32.0</td>
+      <td>177.7</td>
+    </tr>
+    <tr>
+      <th>Line 4</th>
+      <td>87</td>
+      <td>86.3</td>
+      <td>7.3</td>
+      <td>25.3</td>
+      <td>19.6</td>
+      <td>12.7</td>
+      <td>35.7</td>
+      <td>182.0</td>
+    </tr>
+    <tr>
+      <th>Line 5</th>
+      <td>98</td>
+      <td>102.0</td>
+      <td>14.0</td>
+      <td>26.0</td>
+      <td>20.0</td>
+      <td>11.7</td>
+      <td>26.7</td>
+      <td>140.3</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>Line 165</th>
+      <td>81</td>
+      <td>82.8</td>
+      <td>10.3</td>
+      <td>21.5</td>
+      <td>15.8</td>
+      <td>13.7</td>
+      <td>30.0</td>
+      <td>165.7</td>
+    </tr>
+    <tr>
+      <th>Line 166</th>
+      <td>91</td>
+      <td>85.8</td>
+      <td>11.3</td>
+      <td>20.3</td>
+      <td>14.5</td>
+      <td>10.3</td>
+      <td>16.0</td>
+      <td>102.0</td>
+    </tr>
+    <tr>
+      <th>Line 167</th>
+      <td>107</td>
+      <td>88.3</td>
+      <td>10.7</td>
+      <td>24.8</td>
+      <td>18.6</td>
+      <td>10.0</td>
+      <td>25.7</td>
+      <td>141.0</td>
+    </tr>
+    <tr>
+      <th>Line 168</th>
+      <td>109</td>
+      <td>108.3</td>
+      <td>8.7</td>
+      <td>24.7</td>
+      <td>18.9</td>
+      <td>12.3</td>
+      <td>36.3</td>
+      <td>165.3</td>
+    </tr>
+    <tr>
+      <th>Line 169</th>
+      <td>120</td>
+      <td>122.0</td>
+      <td>12.3</td>
+      <td>23.6</td>
+      <td>18.7</td>
+      <td>13.7</td>
+      <td>42.3</td>
+      <td>220.7</td>
+    </tr>
+  </tbody>
+</table>
+<p>169 rows × 8 columns</p>
+</div></div></div>
+</div>
+<p><strong>Normalization</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca_2015_standard</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_2015</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Fit the data and create a dataframe of principle components</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca_2015_model</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1">#number of principal components</span>
+<span class="n">pca_2015_fit</span> <span class="o">=</span> <span class="n">pca_2015_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">pca_2015_standard</span><span class="p">)</span> 
+
+<span class="n">df_2015_pca</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">pca_2015_fit</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pc1&#39;</span><span class="p">,</span> <span class="s1">&#39;pc2&#39;</span><span class="p">,</span><span class="s1">&#39;pc3&#39;</span><span class="p">,</span><span class="s1">&#39;pc4&#39;</span><span class="p">,</span><span class="s1">&#39;pc5&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The variance in the data as explained by each of the component can be check by the <code class="docutils literal notranslate"><span class="pre">explained_variance_ratio_</span></code> of the pca object. The output is the variance associated with each of the principal components (five in this case). We can also calculate the total variance explained by the five components. As we see below the five components together account for 95.9% variance in the data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">cumsum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.62283251 0.16410666 0.07756149 0.05617533 0.03833603]
+[0.62283251 0.78693917 0.86450066 0.92067599 0.95901202]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">components_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.16505669, -0.36898558,  0.24285994, -0.3816588 , -0.408246  ,
+        -0.3591661 , -0.40835848, -0.41175211],
+       [-0.7266037 , -0.2441704 , -0.47751906, -0.21155821, -0.13636855,
+         0.2424033 ,  0.15019558,  0.19932913],
+       [-0.22625375,  0.20730652,  0.74838672, -0.30732605, -0.09178569,
+         0.41958235,  0.14012806,  0.21723589],
+       [-0.41965494, -0.32972906,  0.31061083,  0.53659936,  0.50113939,
+         0.04226267, -0.23352974, -0.15260259],
+       [ 0.30823769, -0.18116406, -0.18564851, -0.1950358 ,  0.12892964,
+         0.73701089, -0.43027916, -0.23391603]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_2015_pca</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pc1</th>
+      <th>pc2</th>
+      <th>pc3</th>
+      <th>pc4</th>
+      <th>pc5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-4.241790</td>
+      <td>0.275651</td>
+      <td>0.358924</td>
+      <td>-0.495200</td>
+      <td>-0.275406</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-2.030945</td>
+      <td>1.637908</td>
+      <td>0.070001</td>
+      <td>-0.686920</td>
+      <td>-0.911864</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.854638</td>
+      <td>0.671051</td>
+      <td>1.212392</td>
+      <td>0.068783</td>
+      <td>0.847572</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.925394</td>
+      <td>1.483075</td>
+      <td>-0.648590</td>
+      <td>0.746669</td>
+      <td>0.069074</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.947741</td>
+      <td>-1.384563</td>
+      <td>0.557716</td>
+      <td>1.403352</td>
+      <td>-0.043060</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_2015_pca</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;pc1&quot;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;pc2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PCA_tutorial_29_0.png" src="_images/PCA_tutorial_29_0.png" />
+</div>
+</div>
+<p>Let’s plot the percentage variance explained vs the components. This plot would have to graphs with bars showing the vairance explained by each component and line showing the cumulative sum of the percent variance explained.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)),</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">cumsum</span><span class="p">())</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)),</span> <span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">cumsum</span><span class="p">())</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Percent Explained&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Cummulative Sum&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Components&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)),</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;PC1&quot;</span><span class="p">,</span> <span class="s2">&quot;PC2&quot;</span><span class="p">,</span> <span class="s2">&quot;PC3&quot;</span><span class="p">,</span> <span class="s2">&quot;PC4&quot;</span><span class="p">,</span> <span class="s2">&quot;PC5&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PCA_tutorial_31_0.png" src="_images/PCA_tutorial_31_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="pca-loadings">
+<h2>PCA Loadings<a class="headerlink" href="#pca-loadings" title="Permalink to this headline">¶</a></h2>
+<p>The loadings value range from -1 to 1 such that its value close to either end (1 or -1) is indicative of a strong influence of a particular feature to a specific component. Loadings can be thought of as analogous to correlation coefficient. To get the loadings we need to mutiple the eigenvectors with the square-root of egienvalues <a class="reference external" href="https://stats.stackexchange.com/questions/143905/loadings-vs-eigenvectors-in-pca-when-to-use-one-or-another">reference</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([5.01231878, 1.3206679 , 0.62418533, 0.45207762, 0.30851375])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loadings2</span> <span class="o">=</span> <span class="n">pca_2015_model</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pca_2015_model</span><span class="o">.</span><span class="n">explained_variance_</span><span class="p">)</span>
+<span class="n">loading_matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">loadings2</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pc1&#39;</span><span class="p">,</span> <span class="s1">&#39;pc2&#39;</span><span class="p">,</span><span class="s1">&#39;pc3&#39;</span><span class="p">,</span><span class="s1">&#39;pc4&#39;</span><span class="p">,</span><span class="s1">&#39;pc5&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df_2015</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loading_matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pc1</th>
+      <th>pc2</th>
+      <th>pc3</th>
+      <th>pc4</th>
+      <th>pc5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Days-to-heading</th>
+      <td>-0.369532</td>
+      <td>-0.835015</td>
+      <td>-0.178753</td>
+      <td>-0.282162</td>
+      <td>0.171208</td>
+    </tr>
+    <tr>
+      <th>Culm length (cm)</th>
+      <td>-0.826093</td>
+      <td>-0.280601</td>
+      <td>0.163783</td>
+      <td>-0.221699</td>
+      <td>-0.100626</td>
+    </tr>
+    <tr>
+      <th>Panicle No.</th>
+      <td>0.543720</td>
+      <td>-0.548766</td>
+      <td>0.591266</td>
+      <td>0.208845</td>
+      <td>-0.103117</td>
+    </tr>
+    <tr>
+      <th>Panicle length (cm)</th>
+      <td>-0.854466</td>
+      <td>-0.243123</td>
+      <td>-0.242804</td>
+      <td>0.360792</td>
+      <td>-0.108331</td>
+    </tr>
+    <tr>
+      <th>Rachis length (cm)</th>
+      <td>-0.913990</td>
+      <td>-0.156715</td>
+      <td>-0.072516</td>
+      <td>0.336950</td>
+      <td>0.071613</td>
+    </tr>
+    <tr>
+      <th>Primary branch No.</th>
+      <td>-0.804109</td>
+      <td>0.278571</td>
+      <td>0.331493</td>
+      <td>0.028416</td>
+      <td>0.409365</td>
+    </tr>
+    <tr>
+      <th>Sec. branch No.</th>
+      <td>-0.914241</td>
+      <td>0.172605</td>
+      <td>0.110709</td>
+      <td>-0.157018</td>
+      <td>-0.238994</td>
+    </tr>
+    <tr>
+      <th>Spikelet No.</th>
+      <td>-0.921839</td>
+      <td>0.229070</td>
+      <td>0.171628</td>
+      <td>-0.102605</td>
+      <td>-0.129926</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The signs for the loadings are arbitary. The absolute number represents the correlation with the corresponding pincipal component. The opposite signs for the components indicate negative correlation within the components.</p>
+</div>
+<div class="section" id="biplot">
+<h2>Biplot<a class="headerlink" href="#biplot" title="Permalink to this headline">¶</a></h2>
+<p>Biplot is a useful visualization methods for PCA as gives information about relationship of different features with principal components. This plot comprises of two plots (hence the name):</p>
+<ol class="simple">
+<li><p>A scatter plot showing transformed data along the first two principle components</p></li>
+<li><p>PCA loadings as arrows</p></li>
+</ol>
+<p>Visual analysis of this plot can give information about the extent to which different features affect a specific principal components.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coeff</span> <span class="o">=</span> <span class="n">loading_matrix</span><span class="o">.</span><span class="n">values</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pca_2015_fit</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">pca_2015_fit</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">coeff</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">coeff</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> \
+              <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">overhang</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="c1">#    plt.text(coeff[i,0], coeff[i,1], df_2015.columns.values[1:-1][i], color = &#39;k&#39;, ha = &#39;center&#39;, va = &#39;center&#39;,fontsize=10)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PCA_tutorial_38_0.png" src="_images/PCA_tutorial_38_0.png" />
+</div>
+</div>
+<p>Customising the biplot to match the figure given in the manuscript. The circle in the graph represents 100% variance explained.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#coeff = np.transpose(pca_2015.components_[0:2, :])</span>
+<span class="n">coeff</span> <span class="o">=</span> <span class="n">loading_matrix</span><span class="o">.</span><span class="n">values</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">coeff</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">coeff</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span><span class="n">linestyle</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="n">linewidth</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">overhang</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">coeff</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">coeff</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">df_2015</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">circle1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_box_aspect</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC1 (</span><span class="si">{</span><span class="n">pca_2015</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PC2 (</span><span class="si">{</span><span class="n">pca_2015</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PCA loading for the 2015 data&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PCA_tutorial_40_0.png" src="_images/PCA_tutorial_40_0.png" />
+</div>
+</div>
+<p>Compare the above graph with Figure 1B of <a class="reference external" href="https://www.pnas.org/doi/pdf/10.1073/pnas.1904964116">this manuscript</a>. For a discussion on the results see the <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.1904964116">supplementary material</a>.</p>
+</div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p>Create a figure showing PCA loadings for the 2014 data.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="ML_supervised.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Supervised learning</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Manish Datt (manish@bioinfo.guru)<br/>
+        
+            &copy; Copyright 2022 bioinfo.guru.<br/>
+          <div class="extra_footer">
+            <a href="https://bioinfo.guru">Online course catalogue</a>
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
